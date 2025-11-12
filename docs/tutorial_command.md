@@ -113,7 +113,7 @@ $ rm file.tx
 **基本的な使い方:**
 
 ```bash
-$ mkdir dirnam
+$ mkdir dirname
 ```
 
 **ユースケース:**
@@ -210,7 +210,7 @@ $ tail file.txt
 **基本的な使い方:**
 
 ```bash
-$ head file.t
+$ head file.txt
 ```
 
 **ユースケース:**
@@ -260,7 +260,7 @@ $ find /path/to/search -name "filename"
 **基本的な使い方:**
 
 ```bash
-$ grep "pattern" file.txt
+$ grep "検索したい文字列" file.txt
 ```
 
 **ユースケース:**
