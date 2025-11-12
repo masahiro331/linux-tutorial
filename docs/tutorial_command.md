@@ -473,3 +473,583 @@ $ file filename
 - `file *` - カレントディレクトリの全ファイルの種類を表示
 - `file -b filename` - ファイル名を表示せず、種類のみ表示
 - `file -i filename` - MIMEタイプで表示
+
+---
+
+## ネットワーク関連
+
+### ping コマンド
+
+ネットワーク接続を確認するコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ ping example.com
+
+```
+
+**ユースケース:**
+
+- ホストが到達可能か確認する
+- ネットワークの遅延（レイテンシ）を測定する
+- パケットロスを確認する
+- ネットワーク接続のトラブルシューティング
+
+**よく使うオプション:**
+
+- `ping -c 4 example.com` - 4回だけpingを送信して終了
+- `ping -i 2 example.com` - 2秒間隔でpingを送信
+- `ping -s 1000 example.com` - パケットサイズを1000バイトに指定
+- `ping -q example.com` - 統計情報のみ表示（静かなモード）
+
+**実用例:**
+
+```bash
+# Googleに到達可能か確認
+$ ping -c 4 google.com
+
+# ローカルネットワークのゲートウェイを確認
+$ ping -c 3 192.168.1.1
+
+# IPv6アドレスにping
+$ ping -6 ipv6.google.com
+
+```
+
+---
+
+### curl コマンド
+
+URLからデータを取得・送信するコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ curl https://example.com
+
+```
+
+**ユースケース:**
+
+- Webページの内容を取得する
+- APIエンドポイントをテストする
+- ファイルをダウンロードする
+- HTTPリクエストをカスタマイズして送信する
+
+**よく使うオプション:**
+
+- `curl -O https://example.com/file.zip` - ファイルを元の名前で保存
+- `curl -o output.html https://example.com` - 指定した名前で保存
+- `curl -I https://example.com` - HTTPヘッダーのみ取得
+- `curl -X POST https://api.example.com/data` - POSTリクエストを送信
+- `curl -H "Content-Type: application/json" url` - カスタムヘッダーを追加
+- `curl -d "key=value" https://api.example.com` - データを送信
+- `curl -L https://example.com` - リダイレクトに従う
+- `curl -v https://example.com` - 詳細な情報を表示
+
+**実用例:**
+
+```bash
+# ファイルをダウンロード
+$ curl -O https://example.com/file.zip
+
+# APIからJSONデータを取得
+$ curl https://api.github.com/users/octocat
+
+# JSONデータをPOST送信
+$ curl -X POST -H "Content-Type: application/json" \
+  -d '{"name":"John","age":30}' \
+  https://api.example.com/users
+
+# Basic認証を使用
+$ curl -u username:password https://example.com/api
+
+# レスポンスヘッダーを確認
+$ curl -I https://example.com
+
+```
+
+---
+
+### wget コマンド
+
+ファイルをダウンロードするコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ wget https://example.com/file.zip
+
+```
+
+**ユースケース:**
+
+- インターネットからファイルをダウンロードする
+- Webサイト全体をミラーリングする
+- ダウンロードを中断・再開する
+- 大容量ファイルのダウンロード
+
+**よく使うオプション:**
+
+- `wget -O filename.zip url` - 指定した名前で保存
+- `wget -c url` - 中断したダウンロードを再開
+- `wget -b url` - バックグラウンドでダウンロード
+- `wget -r https://example.com` - 再帰的にダウンロード（ミラーリング）
+- `wget --limit-rate=1m url` - ダウンロード速度を制限（1MB/s）
+- `wget -i urls.txt` - ファイルに記載されたURLを一括ダウンロード
+
+**実用例:**
+
+```bash
+# ファイルをダウンロード
+$ wget https://example.com/file.zip
+
+# 中断したダウンロードを再開
+$ wget -c https://example.com/large-file.iso
+
+# 複数のURLを一括ダウンロード
+$ cat urls.txt
+https://example.com/file1.zip
+https://example.com/file2.zip
+$ wget -i urls.txt
+
+```
+
+**curl vs wget:**
+
+- **curl**: より多機能でAPIテストに適している、デフォルトで標準出力
+- **wget**: ファイルダウンロードに特化、再帰的ダウンロードが得意
+
+---
+
+### ifconfig コマンド
+
+ネットワークインターフェースの設定を表示・変更するコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ ifconfig
+
+```
+
+**ユースケース:**
+
+- ネットワークインターフェースの情報を確認する
+- IPアドレスを確認する
+- MACアドレスを確認する
+- ネットワークインターフェースを有効・無効にする
+
+**よく使うオプション:**
+
+- `ifconfig -a` - すべてのインターフェースを表示（無効なものも含む）
+- `ifconfig eth0` - 特定のインターフェースのみ表示
+- `ifconfig eth0 down` - インターフェースを無効化（要root権限）
+- `ifconfig eth0 up` - インターフェースを有効化（要root権限）
+
+**実用例:**
+
+```bash
+# すべてのネットワークインターフェースを表示
+$ ifconfig
+
+# 特定のインターフェースを表示
+$ ifconfig eth0
+
+# IPアドレスのみ抽出
+$ ifconfig eth0 | grep "inet " | awk '{print $2}'
+
+```
+
+**注意:** 最近のLinuxディストリビューションでは `ip` コマンドの使用が推奨されています。
+
+---
+
+### ip コマンド
+
+ネットワーク設定を管理する現代的なコマンドです（ifconfig の後継）。
+
+**基本的な使い方:**
+
+```bash
+$ ip addr show
+
+```
+
+**ユースケース:**
+
+- ネットワークインターフェースの情報を表示
+- ルーティングテーブルを確認
+- IPアドレスを設定・削除
+- ネットワークインターフェースを管理
+
+**よく使うオプション:**
+
+- `ip addr show` または `ip a` - IPアドレスを表示
+- `ip link show` または `ip l` - ネットワークインターフェースを表示
+- `ip route show` または `ip r` - ルーティングテーブルを表示
+- `ip -s link` - 統計情報を含めて表示
+- `ip addr add 192.168.1.100/24 dev eth0` - IPアドレスを追加
+- `ip link set eth0 up` - インターフェースを有効化
+
+**実用例:**
+
+```bash
+# すべてのIPアドレスを表示
+$ ip addr show
+
+# 特定のインターフェースのみ表示
+$ ip addr show eth0
+
+# ルーティングテーブルを表示
+$ ip route show
+
+# デフォルトゲートウェイを確認
+$ ip route | grep default
+
+# ネットワーク統計を表示
+$ ip -s link
+
+```
+
+**ifconfig vs ip:**
+
+- **ifconfig**: 古いコマンド、非推奨だが広く知られている
+- **ip**: 現代的で多機能、推奨されている
+
+---
+
+### dig コマンド
+
+DNS（Domain Name System）の問い合わせを行うコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ dig example.com
+
+```
+
+**ユースケース:**
+
+- ドメイン名のIPアドレスを調べる
+- DNSレコードを確認する
+- DNS設定のトラブルシューティング
+- 権威DNSサーバーを特定する
+
+**よく使うオプション:**
+
+- `dig example.com A` - Aレコード（IPv4アドレス）を取得
+- `dig example.com AAAA` - AAAAレコード（IPv6アドレス）を取得
+- `dig example.com MX` - MXレコード（メールサーバー）を取得
+- `dig example.com NS` - NSレコード（ネームサーバー）を取得
+- `dig example.com +short` - 簡潔な出力（IPアドレスのみ）
+- `dig @8.8.8.8 example.com` - 特定のDNSサーバーに問い合わせ
+- `dig -x 8.8.8.8` - 逆引き（IPアドレスからドメイン名）
+
+**実用例:**
+
+```bash
+# ドメインのIPアドレスを取得
+$ dig example.com +short
+
+# GoogleのDNSサーバーを使って問い合わせ
+$ dig @8.8.8.8 example.com
+
+# MXレコードを確認（メールサーバー）
+$ dig example.com MX +short
+
+# 詳細な情報を表示
+$ dig example.com ANY
+
+# 逆引きでホスト名を確認
+$ dig -x 93.184.216.34 +short
+
+```
+
+---
+
+### nslookup コマンド
+
+DNSの問い合わせを行うインタラクティブなコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ nslookup example.com
+
+```
+
+**ユースケース:**
+
+- ドメイン名のIPアドレスを調べる
+- DNSサーバーの応答を確認する
+- 逆引きでホスト名を確認する
+
+**よく使うオプション:**
+
+- `nslookup example.com` - ドメインのIPアドレスを取得
+- `nslookup example.com 8.8.8.8` - 特定のDNSサーバーに問い合わせ
+- `nslookup -type=mx example.com` - MXレコードを取得
+- `nslookup -type=ns example.com` - NSレコードを取得
+
+**実用例:**
+
+```bash
+# ドメインのIPアドレスを取得
+$ nslookup google.com
+
+# 特定のDNSサーバーを使用
+$ nslookup google.com 8.8.8.8
+
+# MXレコードを確認
+$ nslookup -type=mx gmail.com
+
+```
+
+**dig vs nslookup:**
+
+- **dig**: より詳細な情報、スクリプトに適している
+- **nslookup**: シンプルで使いやすい、インタラクティブモードあり
+
+---
+
+### netstat コマンド
+
+ネットワーク接続、ルーティングテーブル、インターフェース統計を表示するコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ netstat
+
+```
+
+**ユースケース:**
+
+- 開いているポートを確認する
+- アクティブなネットワーク接続を表示する
+- リスニング中のサービスを確認する
+- ネットワーク統計を表示する
+
+**よく使うオプション:**
+
+- `netstat -tuln` - リスニング中のTCP/UDPポートを表示
+  - `-t`: TCP
+  - `-u`: UDP
+  - `-l`: リスニング中
+  - `-n`: 数値形式で表示（名前解決しない）
+- `netstat -an` - すべてのネットワーク接続を表示
+- `netstat -r` - ルーティングテーブルを表示
+- `netstat -i` - ネットワークインターフェースの統計
+- `netstat -p` - プロセス情報を表示（要root権限）
+
+**実用例:**
+
+```bash
+# リスニング中のポートを確認
+$ netstat -tuln
+
+# 特定のポートを使用しているプロセスを確認
+$ sudo netstat -tulnp | grep :80
+
+# すべてのアクティブな接続を表示
+$ netstat -an
+
+# ルーティングテーブルを表示
+$ netstat -r
+
+```
+
+**注意:** 最近のLinuxでは `ss` コマンドの使用が推奨されています。
+
+---
+
+### ss コマンド
+
+ソケット統計を表示する現代的なコマンドです（netstat の後継）。
+
+**基本的な使い方:**
+
+```bash
+$ ss
+
+```
+
+**ユースケース:**
+
+- ネットワーク接続の状態を確認する
+- リスニング中のポートを表示する
+- 確立された接続を確認する
+- ネットワークパフォーマンスのトラブルシューティング
+
+**よく使うオプション:**
+
+- `ss -tuln` - リスニング中のTCP/UDPポートを表示
+- `ss -a` - すべてのソケットを表示
+- `ss -p` - プロセス情報を表示
+- `ss -s` - 統計サマリーを表示
+- `ss -t state established` - 確立されたTCP接続のみ表示
+- `ss dst 192.168.1.100` - 特定のIPアドレスへの接続を表示
+
+**実用例:**
+
+```bash
+# リスニング中のポートを確認
+$ ss -tuln
+
+# 確立された接続を表示
+$ ss -t state established
+
+# 特定のポートを確認
+$ ss -tuln | grep :443
+
+# プロセス情報を含めて表示
+$ sudo ss -tulnp
+
+# 統計サマリー
+$ ss -s
+
+```
+
+**netstat vs ss:**
+
+- **netstat**: 古いコマンド、広く知られている
+- **ss**: より高速で詳細、推奨されている
+
+---
+
+### traceroute コマンド
+
+パケットが宛先に到達するまでの経路を追跡するコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ traceroute example.com
+
+```
+
+**ユースケース:**
+
+- ネットワーク経路を確認する
+- ネットワーク遅延の原因を特定する
+- パケットがどのルーターを経由するか確認する
+- ネットワークの問題箇所を特定する
+
+**よく使うオプション:**
+
+- `traceroute -n example.com` - 名前解決をスキップ（IPアドレスのみ表示）
+- `traceroute -m 15 example.com` - 最大ホップ数を15に制限
+- `traceroute -q 1 example.com` - 各ホップへの問い合わせ回数を1回に
+- `traceroute -I example.com` - ICMPを使用（デフォルトはUDP）
+
+**実用例:**
+
+```bash
+# Googleへの経路を追跡
+$ traceroute google.com
+
+# 名前解決なしで高速実行
+$ traceroute -n 8.8.8.8
+
+# ICMPを使用
+$ traceroute -I example.com
+
+```
+
+**注意:**
+
+- ファイアウォールやルーターの設定により、一部のホップが表示されない場合があります（`* * *`）
+- 実行には時間がかかることがあります
+
+---
+
+### hostname コマンド
+
+システムのホスト名を表示・設定するコマンドです。
+
+**基本的な使い方:**
+
+```bash
+$ hostname
+
+```
+
+**ユースケース:**
+
+- 現在のホスト名を確認する
+- FQDNを確認する
+- IPアドレスを確認する
+
+**よく使うオプション:**
+
+- `hostname` - ホスト名を表示
+- `hostname -f` - FQDN（完全修飾ドメイン名）を表示
+- `hostname -I` - すべてのIPアドレスを表示
+- `hostname -i` - ホスト名に関連付けられたIPアドレスを表示
+
+**実用例:**
+
+```bash
+# ホスト名を確認
+$ hostname
+
+# FQDNを確認
+$ hostname -f
+
+# IPアドレスを確認
+$ hostname -I
+
+```
+
+---
+
+### ネットワークコマンドの組み合わせ
+
+**Webサーバーの動作確認:**
+
+```bash
+# ポート80がリスニングしているか確認
+$ ss -tuln | grep :80
+
+# curlでHTTPレスポンスを確認
+$ curl -I http://localhost
+
+# ローカルのWebサーバーに接続できるか確認
+$ ping -c 1 localhost && curl http://localhost
+
+```
+
+**DNSトラブルシューティング:**
+
+```bash
+# DNSが正しく解決されるか確認
+$ dig example.com +short
+
+# 異なるDNSサーバーで比較
+$ dig @8.8.8.8 example.com +short
+$ dig @1.1.1.1 example.com +short
+
+# 逆引きも確認
+$ dig -x <IPアドレス> +short
+
+```
+
+**ネットワーク接続の診断:**
+
+```bash
+# ホストに到達可能か確認
+$ ping -c 4 example.com
+
+# 経路を確認
+$ traceroute example.com
+
+# DNS解決を確認
+$ nslookup example.com
+
+# ポートが開いているか確認（80番ポート）
+$ curl -I http://example.com
+
+```
