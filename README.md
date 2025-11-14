@@ -24,7 +24,7 @@ Apache を利用して Webサーバを構築しよう。
 ### OSI参照モデルについて学ぼう
 
 ### TCP/IPについて学ぼう
-
+* https://straypenguin.winfield-net.com/ipttut/output/ipttut_all.html
 ### UDPについて学ぼう
 
 ### HTTPについて学ぼう
